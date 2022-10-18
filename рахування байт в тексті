@@ -18,7 +18,7 @@ int main()
 	cout << endl;
 
 	//рахування всіх символів
-	int result = KolRya * KolSto * KolSym;
+	long long result = KolRya * KolSto * KolSym;
 	cout << result << " symvoliv na vsih storinkah" << endl;
 
 	//варіанти
@@ -27,20 +27,43 @@ int main()
 
 	//вибор типу кодування
 	char str[8];
-tryAgain:
+	tryAgain:
 	cout << "viberyt tip kodevanya" << endl << "1 - unicode" << endl << "2 - ascii" << endl << "napyshity malenkimi bukvami" << endl;
 	cin >> str;
+	int stepiny = 0; //stepiny baytiv
 	if (strcmp(str, UC) == 0)
 	{
-		cout << result / 16 << "byte";
+		cout << result * 16 << "byte" <<endl;
+		cout << result * 16 / 1024 << "kilobyte" << endl;
+		if (result / 1024 > 1024)
+		{
+			cout << "~ " << result / 1024 / 1024 << "megabyte" << endl;
+
+			if (result / 1024 / 1024 > 1024)
+			{
+				cout << "~ " << result / 1024 / 1024 / 1024 << "gigabyte" <<endl;
+			}
+		}
 	}
 	else if (strcmp(str, ASCII) == 0)
 	{
-		cout << result / 16 << "byte";
+		cout << result * 8 << "byte" << endl;
+		cout << "~ " << result / 1024<<"kilobyte" <<endl;
+		if (result / 1024 > 1024)
+		{
+			cout << "~ " << result / 1024 / 1024 << "megabyte" << endl;
+
+			if (result / 1024 / 1024 > 1024)
+			{
+				cout <<"~ " << result / 1024 / 1024 / 1024 << "gigabyte" << endl;
+			}
+		}
+
 	}
 	else
 	{
 		cout << endl << "napeshity pravelno" << endl;
 		goto tryAgain;
 	}
+	
 }
