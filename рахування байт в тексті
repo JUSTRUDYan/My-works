@@ -1,0 +1,46 @@
+#include <iostream>
+#include <string.h>
+using namespace std;
+int main()
+{
+	//об'явлення
+	int KolSto = 0;
+	int KolRya = 0;
+	int KolSym = 0;
+
+	//введення
+	cout << "vvedity kilkisty storinok ";
+	cin >> KolSto;
+	cout << "vvedity kilkisty ryadiv na storinkah ";
+	cin >> KolRya;
+	cout << "vvedity serdny kilkisty simvoliv v ryadku ";
+	cin >> KolSym;
+	cout << endl;
+
+	//рахування всіх символів
+	int result = KolRya * KolSto * KolSym;
+	cout << result << " symvoliv na vsih storinkah" << endl;
+
+	//варіанти
+	char ASCII[6] = { 'a','s','c','i','i' };
+	char UC[8] = { 'u','n','i','c','o','d','e' };
+
+	//вибор типу кодування
+	char str[8];
+tryAgain:
+	cout << "viberyt tip kodevanya" << endl << "1 - unicode" << endl << "2 - ascii" << endl << "napyshity malenkimi bukvami" << endl;
+	cin >> str;
+	if (strcmp(str, UC) == 0)
+	{
+		cout << result / 16 << "byte";
+	}
+	else if (strcmp(str, ASCII) == 0)
+	{
+		cout << result / 16 << "byte";
+	}
+	else
+	{
+		cout << endl << "napeshity pravelno" << endl;
+		goto tryAgain;
+	}
+}
