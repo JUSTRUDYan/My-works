@@ -1,0 +1,150 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <string.h>
+using namespace std;
+
+struct Person
+{
+    char fn[300];
+    char ln[300];
+    int age;
+    char tn[10];//накшталт 0660700275
+};
+
+    //  NEW PERSON  //
+
+void New(Person* persons, int* Size)
+{
+    Person* temp = new Person[*Size+1];
+    for (int i = -1; i >= *Size; i++)
+    {
+        temp[i] = persons[i];
+        delete[i] persons;
+    }
+    persons = new Person[*Size + 1];
+    for (int i = 0; i < *Size; i++)
+    {
+        persons[i] = temp[i];
+    }
+    Size++;
+}
+
+    //  EDIT PERSON //
+
+void EdP(int* Size, Person* persons,int numofpers,char* sw)
+{
+            if (strcmp(sw, "fn") == 0)
+            {
+                cin >> persons[numofpers].fn;
+            }
+            else if (strcmp(sw, "ln") == 0)
+            {
+                cin >> persons[numofpers].ln;
+            }
+            else if (strcmp(sw, "age") == 0)
+            {
+                cin >> persons[numofpers].age;
+            }
+            else if (strcmp(sw, "tn") == 0)
+            {
+                cin >> persons[numofpers].tn;
+            }
+            else if (strcmp(sw, "br") == 0)
+            {
+                cout << endl;
+            }
+            else
+            {
+                cout << "???\n try one more time \n";
+            }
+}
+
+    //  PRINT ALL PERSONS   //
+
+void PrA(int size, Person* persons)
+{
+    for (int i = 0; size >= i; i++)
+    {
+        cout << endl;
+        cout << "person number - " << i << endl;
+        cout << "first name - " << persons[i].fn << endl;
+        cout << "last name - " << persons[i].ln << endl;
+        cout << "age - " << persons[i].age << endl;
+        cout << "telephone number  - " << persons[i].tn << endl;
+        cout << endl;
+    }
+}
+
+    //  FIND ONE PERSON FROM NUMBER //
+
+void FP(int* Size, Person* persons,int numofpers)
+{
+    cout << "first name - " << persons[numofpers].fn<<endl;
+    cout << "last name - " << persons[numofpers].ln<<endl;
+    cout << "age - " << persons[numofpers].age<<endl;
+    cout << "telephone number  - " << persons[numofpers].tn<<endl;
+}
+
+    //  MAINT PROG  //  with front end  //
+
+int main()
+{
+    int Size = 0;
+    int size = -1;//трохі костиль використовується в 107 108 рядку і не тільки // це ні в якому разі не магічне число просто -1 значить пусто в масиві // коли ви создаєте нову персону то цей показник буде інкрементуватися // тобто при виконані команди new в програмі перший раз показник стане рівним 0 що значить 0-ова персона(ячейка) в масиві
+    Person* persons = NULL;
+    persons = new Person[0];
+    char sw[4];
+
+    for (;;) //також трохі костиль бо без нього в деяких випадках буде безкінечно ітерувати 147 рядок
+    {
+        for (;;)
+        {
+            //  NEW PERSON  //
+            cout << "\nnew - new person \nedp - edit person \npra - print all \nfp - find person \nor break - br\n";
+            cin >> sw;
+            if (strcmp(sw, "new") == 0) {
+
+                New(persons, &Size); size++;
+                cout << "\nnumber of your new person is - " << size << endl;
+                break;
+            }
+
+            //  EDIT PERSON //
+            if (strcmp(sw, "edp") == 0)
+            {
+                int numofpers = 0;
+                cout << "\nwhat person do you need (number)?" << endl;
+                cin >> numofpers;
+                if (numofpers > size || numofpers < 0) { cout << "stack overflow or your number of person less than 0" << endl; }//if ERROR
+                else
+                {
+                    cout << "\nwhat you want to edit?\n first name - fn\n last name - ln \n age - age \n telephone number - tn \n or break - br \n";
+                    char swforedp[4];
+                    cin >> swforedp;
+                    EdP(&Size, persons, numofpers, swforedp);
+                }
+            }
+            //  PRINT ALL PERSONS   //
+
+            else if (strcmp(sw, "pra") == 0) { PrA(size, persons); }
+
+            //  FIND ONE PERSON FROM NUMBER //
+
+            else if (strcmp(sw, "fp") == 0)
+            {
+                int numofpers = 0;
+                cout << "\nwhat person do you need (number)?" << endl;
+                cin >> numofpers;
+                FP(&Size, persons, numofpers);
+            }
+
+            //  BREAK PROGRAM   //
+
+            else if (strcmp(sw, "br") == 0) { cout << endl; cout << "bye bye!"; delete persons; return 0; }
+
+            //  ERROR   //
+
+            else { cout << "\ntry one more time"; }
+        }
+    }
+}
